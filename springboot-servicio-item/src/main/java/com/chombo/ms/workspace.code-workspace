@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\..\\..\\..\\..\\springboot-servicio-productos"
+		},
+		{
+			"name": "springboot-servicio-item",
+			"path": "..\\..\\..\\..\\..\\.."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
