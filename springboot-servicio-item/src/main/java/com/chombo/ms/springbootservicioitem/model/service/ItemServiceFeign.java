@@ -7,11 +7,9 @@ import com.chombo.ms.springbootservicioitem.clients.ProductoClienteRest;
 import com.chombo.ms.springbootservicioitem.model.Item;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-@Service
-@Primary
+@Service("itemServiceFeign")
 public class ItemServiceFeign implements ItemService {
 
     @Autowired

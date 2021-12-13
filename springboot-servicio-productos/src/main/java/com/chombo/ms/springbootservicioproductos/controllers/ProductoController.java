@@ -9,7 +9,7 @@ import com.chombo.ms.springbootservicioproductos.models.service.IProductoService
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +22,15 @@ public class ProductoController {
     @Autowired
     private IProductoService productoService;
 
-    @Autowired
-    private Environment env;
+    @Value("${server.port}")
+    private Integer port;
 
     @GetMapping("/listar")
     public List<Producto> listar() {
         log.info("Consiming /listar");
+        log.info("port: " + port);
         return productoService.findAll().stream().map(m -> {
-            m.setPort(Integer.parseInt(env.getProperty("server.port")));
+            m.setPort(port);
             return m;
         }).collect(Collectors.toList());
     }
@@ -38,7 +39,7 @@ public class ProductoController {
     public Producto detalle(@PathVariable Long id) {
         log.info("Consiming /ver/" + id);
         Producto o = productoService.findById(id);
-        o.setPort(Integer.parseInt(env.getProperty("server.port")));
+        o.setPort(port);
         return o;
     }
 }
