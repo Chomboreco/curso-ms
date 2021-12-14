@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,9 @@ public class ProductoController {
     @Autowired
     private IProductoService productoService;
 
+    @Autowired
+    private Environment env;
+
     @Value("${server.port}")
     private Integer port;
 
@@ -30,7 +34,8 @@ public class ProductoController {
         log.info("Consiming /listar");
         log.info("port: " + port);
         return productoService.findAll().stream().map(m -> {
-            m.setPort(port);
+            // m.setPort(port);
+            m.setPort(Integer.parseInt(env.getProperty("local.server.port")));
             return m;
         }).collect(Collectors.toList());
     }
@@ -39,14 +44,14 @@ public class ProductoController {
     public Producto detalle(@PathVariable Long id) {
         log.info("Consiming /ver/" + id);
         Producto o = productoService.findById(id);
-        o.setPort(port);
-
+        // o.setPort(port);
+        o.setPort(Integer.parseInt(env.getProperty("local.server.port")));
         // Timeout por defecto de hystrix es de 1s
-        try {
+        /*try {
             Thread.sleep(30000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         
         return o;
     }
