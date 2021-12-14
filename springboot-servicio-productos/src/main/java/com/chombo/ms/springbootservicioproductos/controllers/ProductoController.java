@@ -40,6 +40,12 @@ public class ProductoController {
         log.info("Consiming /ver/" + id);
         Producto o = productoService.findById(id);
         o.setPort(port);
+        boolean ok = false;
+        if(!ok)
+        {
+            throw new RuntimeException("No se pudo cargar el producto!");
+        }
+        
         return o;
     }
 }
