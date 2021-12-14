@@ -40,10 +40,12 @@ public class ProductoController {
         log.info("Consiming /ver/" + id);
         Producto o = productoService.findById(id);
         o.setPort(port);
-        boolean ok = false;
-        if(!ok)
-        {
-            throw new RuntimeException("No se pudo cargar el producto!");
+
+        // Timeout por defecto de hystrix es de 1s
+        try {
+            Thread.sleep(4000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         
         return o;
