@@ -47,11 +47,11 @@ public class ProductoController {
         // o.setPort(port);
         o.setPort(Integer.parseInt(env.getProperty("local.server.port")));
         // Timeout por defecto de hystrix es de 1s
-        /*try {
-            Thread.sleep(30000L);
+        try {
+            Thread.sleep(2000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
         
         return o;
     }
