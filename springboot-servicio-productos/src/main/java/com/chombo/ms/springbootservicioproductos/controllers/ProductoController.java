@@ -43,7 +43,7 @@ public class ProductoController {
 
         // Timeout por defecto de hystrix es de 1s
         try {
-            Thread.sleep(4000L);
+            Thread.sleep(30000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
