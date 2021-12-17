@@ -9,7 +9,6 @@ import com.chombo.ms.springbootservicioproductos.models.service.IProductoService
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,33 +25,35 @@ public class ProductoController {
     @Autowired
     private Environment env;
 
-    @Value("${server.port}")
-    private Integer port;
+    //private Integer port;
 
     @GetMapping("/listar")
     public List<Producto> listar() {
         log.info("Consiming /listar");
-        log.info("port: " + port);
-        return productoService.findAll().stream().map(m -> {
+        log.info("port: " + Integer.parseInt(env.getProperty("local.server.port")));
+
+        return productoService.findAll().stream().map(producto -> {
             // m.setPort(port);
-            m.setPort(Integer.parseInt(env.getProperty("local.server.port")));
-            return m;
+            producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+            return producto;
         }).collect(Collectors.toList());
     }
 
     @GetMapping("/ver/{id}")
     public Producto detalle(@PathVariable Long id) {
         log.info("Consiming /ver/" + id);
-        Producto o = productoService.findById(id);
-        // o.setPort(port);
-        o.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+        log.info("port: " + Integer.parseInt(env.getProperty("local.server.port")));
+
+        Producto producto = productoService.findById(id);
+        producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+        //port = producto.getPort();
         // Timeout por defecto de hystrix es de 1s
-        try {
+        /*try {
             Thread.sleep(2000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         
-        return o;
+        return producto;
     }
 }
