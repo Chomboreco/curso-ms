@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class EjemploGatewayFilterFactory
 
     @Override
     public GatewayFilter apply(Configuracion config) {
-        return (exchange, chain) -> {
+        return new OrderedGatewayFilter((exchange, chain) -> {
             log.info("Ejecutando pre gateway filter factory: " + config.mensaje);
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 Optional.ofNullable(config.cookieValor).ifPresent(cookie -> {
@@ -32,7 +33,12 @@ public class EjemploGatewayFilterFactory
 
                 log.info("Ejecutando post gateway filter factory");
             }));
-        };
+        }, 2);
+    }
+
+    @Override
+    public String name() {
+        return "EjemploCookie";
     }
 
     public static class Configuracion {
