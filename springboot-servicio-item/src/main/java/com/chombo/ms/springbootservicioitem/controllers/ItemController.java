@@ -27,7 +27,7 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("/listar")
-    public List<Item> listar(@RequestParam("nombre") String nombre, @RequestHeader("token-request") String token) {
+    public List<Item> listar(@RequestParam(name = "nombre", required = false) String nombre, @RequestHeader(name = "token-request", required = false) String token) {
         log.info("nombre: " + nombre);
         log.info("token: " + token);
         return itemService.findAll();
