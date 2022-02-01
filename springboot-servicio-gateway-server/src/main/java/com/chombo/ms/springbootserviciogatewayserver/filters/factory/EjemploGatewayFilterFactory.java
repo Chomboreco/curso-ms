@@ -1,5 +1,7 @@
 package com.chombo.ms.springbootserviciogatewayserver.filters.factory;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class EjemploGatewayFilterFactory
                     exchange.getResponse().addCookie(ResponseCookie.from(config.cookieNombre, cookie).build());
                 });
 
-                log.info("Ejecutando post gateway filter factory");
+                log.info("Ejecutando post gateway filter factory" + config.mensaje);
             }));
         };
     }
@@ -38,6 +40,12 @@ public class EjemploGatewayFilterFactory
     @Override
     public String name() {
         return "EjemploCookie";
+    }
+    
+
+    @Override
+    public List<String> shortcutFieldOrder() {
+        return Arrays.asList("mensaje", "cookieValor", "cookieNombre");
     }
 
     public static class Configuracion {
