@@ -1,6 +1,7 @@
 package com.chombo.ms.springbootservicioproductos.controllers;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.chombo.ms.springbootservicioproductos.models.entity.Producto;
@@ -40,19 +41,22 @@ public class ProductoController {
     }
 
     @GetMapping("/ver/{id}")
-    public Producto detalle(@PathVariable Long id) {
+    public Producto detalle(@PathVariable Long id) throws InterruptedException {
         log.info("Consiming /ver/" + id);
         log.info("port: " + Integer.parseInt(env.getProperty("local.server.port")));
+
+        // Simulamos el error para probar
+        if (id.equals(10L)) {
+            throw new IllegalStateException("Producto no encontrado");
+        }
+
+        if (id.equals(7L)) {
+            TimeUnit.SECONDS.sleep(5L);
+        }
 
         Producto producto = productoService.findById(id);
         producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
         //port = producto.getPort();
-        // Timeout por defecto de hystrix es de 1s
-        /*try {
-            Thread.sleep(2000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         
         return producto;
     }
