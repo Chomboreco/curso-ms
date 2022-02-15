@@ -1,6 +1,7 @@
 package com.chombo.ms.springbootservicioitem.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.chombo.ms.springbootservicioitem.model.Item;
 import com.chombo.ms.springbootservicioitem.model.Producto;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 
 @RestController
 public class ItemController {
@@ -42,6 +46,19 @@ public class ItemController {
         return cbFactory.create("items").run(() -> itemService.findById(id, cantidad), e -> metodoAlternativo(id, cantidad, e));
     }
 
+    @CircuitBreaker(name = "items", fallbackMethod = "metodoAlternativo")
+    @GetMapping("/ver2/{id}/cantidad/{cantidad}")
+    public Item detalle2(@PathVariable Long id, @PathVariable Integer cantidad) {
+        return itemService.findById(id, cantidad);
+    }
+
+    @CircuitBreaker(name = "items", fallbackMethod = "metodoAlternativo2")
+    @TimeLimiter(name = "items")
+    @GetMapping("/ver3/{id}/cantidad/{cantidad}")
+    public CompletableFuture<Item> detalle3(@PathVariable Long id, @PathVariable Integer cantidad) {
+        return CompletableFuture.supplyAsync(() -> itemService.findById(id, cantidad));
+    }
+
     public Item metodoAlternativo(Long id, Integer cantidad, Throwable e) {
         log.error("Error", e);
         Item item = new Item();
@@ -52,5 +69,17 @@ public class ItemController {
         producto.setPrecio(9500.00);
         item.setProducto(producto);
         return item;
+    }
+
+    public CompletableFuture<Item> metodoAlternativo2(Long id, Integer cantidad, Throwable e) {
+        log.error("Error", e);
+        Item item = new Item();
+        Producto producto = new Producto();
+        item.setCantidad(cantidad);
+        producto.setId(id);
+        producto.setNombre("Camara Nikon");
+        producto.setPrecio(9500.00);
+        item.setProducto(producto);
+        return CompletableFuture.supplyAsync(() -> item);
     }
 }
