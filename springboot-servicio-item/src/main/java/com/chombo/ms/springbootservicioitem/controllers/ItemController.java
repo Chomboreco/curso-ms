@@ -1,6 +1,8 @@
 package com.chombo.ms.springbootservicioitem.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import com.chombo.ms.springbootservicioitem.model.Item;
@@ -11,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,6 +37,9 @@ public class ItemController {
     @Autowired
     @Qualifier("itemServiceFeign")
     private ItemService itemService;
+
+    @Value("${configuracion.texto}")
+    private String texto;
 
     @GetMapping("/listar")
     public List<Item> listar(@RequestParam(name = "nombre", required = false) String nombre, @RequestHeader(name = "token-request", required = false) String token) {
@@ -57,6 +65,16 @@ public class ItemController {
     @GetMapping("/ver3/{id}/cantidad/{cantidad}")
     public CompletableFuture<Item> detalle3(@PathVariable Long id, @PathVariable Integer cantidad) {
         return CompletableFuture.supplyAsync(() -> itemService.findById(id, cantidad));
+    }
+
+    @GetMapping("/obtener-config")
+    public ResponseEntity<?> obtenerConfiguracion(@Value("${server.port}") String port) {
+        Map<String, String> json = new HashMap<>();
+        log.info(texto);
+        json.put("texto", texto);
+        json.put("puerto", port);
+
+        return new ResponseEntity<Map<String, String>>(json, HttpStatus.OK);
     }
 
     public Item metodoAlternativo(Long id, Integer cantidad, Throwable e) {
