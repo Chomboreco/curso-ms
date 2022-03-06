@@ -62,6 +62,6 @@ public class ItemServiceImpl implements ItemService {
         Map<String, String> pathVariables = new HashMap<String, String>();
         pathVariables.put("id", id.toString());
 
-        clienteRest.delete("http://servicio-productos/elimiar/{id}", pathVariables);
+        clienteRest.delete("http://servicio-productos/eliminar/{id}", pathVariables);
     }
 }
