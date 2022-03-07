@@ -12,7 +12,8 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public interface UsuarioDao extends PagingAndSortingRepository<Usuario, Long> {
 
     /*
-     * Si en un método no se le especifíca el path en @RestResource entonces tomará el nombre del método.
+     * Si en un método no se le especifíca el path en @RestResource entonces tomará
+     * el nombre del método.
      */
     @RestResource(path = "buscar-username")
     public Usuario findByUsername(@Param("username") String username);
