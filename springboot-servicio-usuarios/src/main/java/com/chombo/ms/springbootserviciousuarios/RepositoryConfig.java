@@ -1,7 +1,7 @@
 package com.chombo.ms.springbootserviciousuarios;
 
-import com.chombo.ms.springbootserviciousuarios.models.entity.Role;
-import com.chombo.ms.springbootserviciousuarios.models.entity.Usuario;
+import com.chombo.ms.springbootserviciousuarioscommons.models.entity.Role;
+import com.chombo.ms.springbootserviciousuarioscommons.models.entity.Usuario;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

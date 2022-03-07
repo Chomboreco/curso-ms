@@ -1,6 +1,6 @@
 package com.chombo.ms.springbootserviciousuarios.models.entity.dao;
 
-import com.chombo.ms.springbootserviciousuarios.models.entity.Usuario;
+import com.chombo.ms.springbootserviciousuarioscommons.models.entity.Usuario;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

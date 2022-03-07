@@ -1,4 +1,4 @@
-package com.chombo.ms.springbootserviciousuarios.models.entity;
+package com.chombo.ms.springbootserviciousuarioscommons.models.entity;
 
 import java.io.Serializable;
 
