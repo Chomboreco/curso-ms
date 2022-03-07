@@ -3,9 +3,9 @@ package com.chombo.ms.springbootservicioitem.model.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioitem.clients.ProductoClienteRest;
 import com.chombo.ms.springbootservicioitem.model.Item;
-import com.chombo.ms.springbootservicioitem.model.Producto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,19 +28,16 @@ public class ItemServiceFeign implements ItemService {
 
     @Override
     public Producto save(Producto producto) {
-        // TODO Auto-generated method stub
-        return null;
+        return clienteFeign.crear(producto);
     }
 
     @Override
     public Producto update(Producto producto, Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return clienteFeign.update(producto, id);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        
+        clienteFeign.eliminar(id);
     }
 }

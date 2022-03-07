@@ -1,5 +1,7 @@
 package com.chombo.ms.springbootservicioitem.model;
 
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
+
 public class Item {
     private Producto producto;
     private Integer cantidad;

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioitem.model.Item;
-import com.chombo.ms.springbootservicioitem.model.Producto;
 import com.chombo.ms.springbootservicioitem.model.service.ItemService;
 
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class ItemController {
     private CircuitBreakerFactory cbFactory;
 
     @Autowired
-    @Qualifier("serviceRestTemplate")
+    @Qualifier("itemServiceFeign")
     private ItemService itemService;
 
     @Value("${configuracion.texto}")

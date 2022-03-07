@@ -2,7 +2,7 @@ package com.chombo.ms.springbootservicioproductos.models.service;
 
 import java.util.List;
 
-import com.chombo.ms.springbootservicioproductos.models.entity.Producto;
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioproductos.models.repository.ProductoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

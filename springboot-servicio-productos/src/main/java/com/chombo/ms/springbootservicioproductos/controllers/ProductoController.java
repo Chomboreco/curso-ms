@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.chombo.ms.springbootservicioproductos.models.entity.Producto;
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioproductos.models.service.IProductoService;
 
 import org.slf4j.Logger;

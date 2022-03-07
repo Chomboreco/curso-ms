@@ -1,6 +1,6 @@
 package com.chombo.ms.springbootservicioproductos.models.repository;
 
-import com.chombo.ms.springbootservicioproductos.models.entity.Producto;
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 
 import org.springframework.data.repository.CrudRepository;
 

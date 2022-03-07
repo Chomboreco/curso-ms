@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioitem.model.Item;
-import com.chombo.ms.springbootservicioitem.model.Producto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

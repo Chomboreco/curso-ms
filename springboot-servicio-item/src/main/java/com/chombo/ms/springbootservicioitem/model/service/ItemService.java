@@ -2,8 +2,8 @@ package com.chombo.ms.springbootservicioitem.model.service;
 
 import java.util.List;
 
+import com.chombo.ms.springbootserviciocommons.models.entity.Producto;
 import com.chombo.ms.springbootservicioitem.model.Item;
-import com.chombo.ms.springbootservicioitem.model.Producto;
 
 public interface ItemService {
 
