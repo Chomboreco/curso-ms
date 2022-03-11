@@ -34,13 +34,14 @@ public class Usuario implements Serializable {
     @Column(unique = true, length = 100)
     private String email;
 
+    private Integer intentos;
+
     @ManyToMany(fetch = FetchType.LAZY)
-    // Para personalizar el nombre de la tabla intermedia en la relación MtoM se usa:
-    @JoinTable(name = "usuarios_roles", 
-        joinColumns = @JoinColumn(name = "usuario_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"),
-        // Para crear una restriccion de que no se repita un Rol más de una vez se usa:
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "role_id"})})
+    // Para personalizar el nombre de la tabla intermedia en la relación MtoM se
+    // usa:
+    @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"),
+            // Para crear una restriccion de que no se repita un Rol más de una vez se usa:
+            uniqueConstraints = { @UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
     private List<Role> roles;
 
     public Long getId() {
@@ -105,5 +106,13 @@ public class Usuario implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Integer getIntentos() {
+        return intentos;
+    }
+
+    public void setIntentos(Integer intentos) {
+        this.intentos = intentos;
     }
 }
