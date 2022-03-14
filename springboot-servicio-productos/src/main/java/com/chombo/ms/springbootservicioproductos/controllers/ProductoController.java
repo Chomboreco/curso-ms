@@ -52,9 +52,9 @@ public class ProductoController {
         log.info("port: " + Integer.parseInt(env.getProperty("local.server.port")));
 
         // Simulamos el error para probar
-        if (id.equals(10L)) {
+        /*if (id.equals(10L)) {
             throw new IllegalStateException("Producto no encontrado");
-        }
+        }*/
 
         if (id.equals(7L)) {
             TimeUnit.SECONDS.sleep(5L);
