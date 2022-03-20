@@ -1,0 +1,98 @@
+### Versión del formato del archivo
+version: '3.7'
+
+### Contenedores que se ejecutarán 
+services:
+  config-server:
+    image: config-server:v1
+    ports:
+      - "8888:8888"
+    restart: always
+    networks:
+      - curso-ms
+  eureka-server:
+    image: servicio-eureka-server:v1
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - curso-ms
+  ms-mysql8:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - curso-ms
+    environment:
+      - MYSQL_DATABASE=db_springboot_cloud
+      - MYSQL_ROOT_PASSWORD=root
+  postgres:
+    image: postgres:12-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - curso-ms
+    environment: 
+      POSTGRES_DB: db_springboot_cloud
+      POSTGRES_PASSWORD: root
+  servicio-usuarios:
+    image: servicio-usuarios:v1
+    restart: always
+    networks:
+      - curso-ms
+    depends_on: 
+      - config-server
+      - eureka-server
+      - postgres
+  servicio-oauth:
+    image: servicio-oauth:v1
+    ports:
+      - "9100:9100"
+    restart: always
+    networks:
+      - curso-ms
+    depends_on: 
+      - config-server
+      - eureka-server
+      - servicio-usuarios
+  servicio-productos:
+    image: servicio-productos:v1
+    restart: always
+    networks:
+      - curso-ms
+    depends_on:
+      - config-server
+      - eureka-server
+      - ms-mysql8
+  servicio-item:
+    image: servicio-item:v1
+    ports:
+      - "8002:8002"
+      - "8005:8005"
+      - "8007:8007"
+    restart: always
+    networks:
+      - curso-ms
+    depends_on:
+      - config-server
+      - eureka-server
+      - servicio-productos
+  servicio-zuul-server:
+    image: servicio-zuul-server:v1
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - curso-ms
+    depends_on:
+      - config-server
+      - eureka-server
+      - servicio-productos
+      - servicio-item
+      - servicio-usuarios
+      - servicio-oauth
+### Netowrk que se darán de alta
+networks:
+  curso-ms:
